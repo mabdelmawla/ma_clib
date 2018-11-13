@@ -48,4 +48,4 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 #define MA_AES_GET_MODE(cfg)	(((cfg) & MA_AES_MODE_MSK)>>MA_AES_MODE_SHIFT)
 
 _t_ma_err ma_aes();
-#endif _MA_AES_H_
+#endif //_MA_AES_H_

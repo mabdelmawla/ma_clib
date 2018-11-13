@@ -105,7 +105,7 @@ void ma_aes_cmn_shift_rows(_t_ma_aes_sb* p_state);
 
 /**
 @function	ma_aes_cmn_sub_bytes
-@brief		Transformation in the Cipher that processes the State using a non­
+@brief		Transformation in the Cipher that processes the State using a nonï¿½
 			linear byte substitution table (S-box) that operates on each of the 
 			State bytes independently
 @param[IN]

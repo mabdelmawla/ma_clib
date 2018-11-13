@@ -34,7 +34,7 @@ _t_ma_err tst_run(_t_ma_enum_tst_module_id enum_tst_module_id, _t_ma_enum_tst_sc
 				printf("OK\n");
 			}
 			else {
-				printf("ERR%d\n", res);
+				printf("ERR%ld\n", res);
 			}
 		}
 	}
