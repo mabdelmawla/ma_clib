@@ -5,7 +5,7 @@ APP=ma_clib_test
 CC=gcc
 
 #CFLAGS
-CFLAGS=-Iinc -I.
+CFLAGS=-Iinc -I. -g
 
 #Source root
 SRC_ROOT=src

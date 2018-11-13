@@ -4,7 +4,7 @@
 _t_ma_err tst_ma_aes_cmn_shift_rows(char* fn_name){
 	_t_ma_err ret = MA_ERR_OK;
 	int i, j;
-	_t_ma_aes_sb inp = 
+	_t_ma_aes_sb inp =
 	{
 		{0x00, 0x01, 0x02, 0x03 },
 		{0x10, 0x11, 0x12, 0x13 },
