@@ -22,30 +22,21 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 #define _MA_AES_H_
 #include "ma_common.h"
 
-/*!< AES Operations */
-#define MA_AES_OP_NUM_BITS		1
-#define MA_AES_OP_SHIFT			0
-#define MA_AES_OP_MSK			MA_CMN_GEN_MASK_32(MA_AES_OP_NUM_BITS,MA_AES_OP_SHIFT)
-#define MA_AES_OP_ENC			0
-#define MA_AES_OP_DEC			1
-
-/*!< AES MODE */
-#define MA_AES_MODE_NUM_BITS	8
-#define MA_AES_MODE_SHIFT		(MA_AES_OP_SHIFT + MA_AES_OP_NUM_BITS)
-#define MA_AES_MODE_MSK			MA_CMN_GEN_MASK_32(MA_AES_MODE_NUM_BITS,MA_AES_MODE_SHIFT)
-#define MA_AES_MODE_ECB			0
-#define MA_AES_MODE_CBC			1
-
-/*!< AES CFG */
-#define MA_AES_CFG(op,mode)		\
-	((((_t_ma_u32)(op) & MA_CMN_GEN_MASK_32(MA_AES_OP_NUM_BITS,0)) << MA_AES_OP_SHIFT) | \
-	(((_t_ma_u32)(mode) & MA_CMN_GEN_MASK_32(MA_AES_MODE_NUM_BITS, 0)) << MA_AES_MODE_SHIFT))
-
-/*!< AES GET OP CFG */
-#define MA_AES_GET_OP(cfg)	(((cfg) & MA_AES_OP_MSK)>>MA_AES_OP_SHIFT)
-
-/*!< AES GET MODE CFG */
-#define MA_AES_GET_MODE(cfg)	(((cfg) & MA_AES_MODE_MSK)>>MA_AES_MODE_SHIFT)
-
-_t_ma_err ma_aes();
+/**
+@function	ma_aes_ecb_encrypt
+@brief		Perform AEC ECB encryption
+@param[IN]	in: Input block array in bytes
+@param[OUT]	out: Output block array in bytes
+@param[IN]	key: Key array in bytes with size defined by NK
+@param[IN]	NK: Can be (ONLY) one of the following MACRO values depending on the desired key size
+					MA_AES_CMN_NK_128
+					MA_AES_CMN_NK_192
+					MA_AES_CMN_NK_256
+@return		NO Return
+@notes		No input parameters error checking is performed. The caller is responsible for the validity of the passed parameters
+@author		M. Abdelmawla
+@date		12 MAY 2019
+@version	1.0
+*/
+void ma_aes_ecb_encrypt(_t_ma_u8 *in, _t_ma_u8 *out, _t_ma_u8 *key, _t_ma_u8 nk);
 #endif //_MA_AES_H_

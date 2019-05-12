@@ -210,3 +210,19 @@ void ma_aes_cmn_mix_columns(_t_ma_aes_sb* p_state){
 			_internal_aes_mod_mult(0x02, s[3]);
 	}
 }
+
+void ma_aes_cmn_sub_bytes(_t_ma_aes_sb* p_state){
+	int r, c;
+	for(r = 0; r < 4; r++){
+		for(c = 0; c < 4; c++)
+			(*p_state)[r][c] = gau8_ma_aes_cmn_s[(*p_state)[r][c]];
+	}
+}
+
+void ma_aes_cmn_inv_sub_bytes(_t_ma_aes_sb* p_state){
+	int r, c;
+	for(r = 0; r < 4; r++){
+		for(c = 0; c < 4; c++)
+			(*p_state)[r][c] = gau8_ma_aes_cmn_inv_s[(*p_state)[r][c]];
+	}
+}

@@ -52,7 +52,8 @@ void ma_aes_common_cov_swc_to_blk(_t_ma_aes_blk *blk, _t_ma_aes_swc *swc);
 				= 8 for 256-bit
 				Nb = 4
 				Nr = Nk + 6
-@param[IN]
+@param[IN]	p_key: Byte array containing the key with size defined by NK value
+@param[OUT]	p_w: Word array containing the key schedule size defined by NK value
 @return		NA
 @notes
 @author		M. Abdelmawla
@@ -62,26 +63,11 @@ void ma_aes_common_cov_swc_to_blk(_t_ma_aes_blk *blk, _t_ma_aes_swc *swc);
 void ma_aes_cmn_key_expansion(_t_ma_u8 *p_key, _t_ma_u32 *p_w, _t_ma_u8 nk);
 
 /**
-@function	ma_aes_cmn_add_round_key
-@brief		Transformation in the Cipher and Inverse Cipher in which a Round 
-			Key is added to the State using an XOR operation.  The length of a 
-			Round Key equals the size of the State (i.e., for Nb= 4, the Round 
-			Key length equals 128 bits/16 bytes). 
-@param[IN]	
-@return		MA_ERR_OK in case of success and suitable error code in case of error
-@notes		
-@author		M. Abdelmawla
-@date		22 DEC 2017
-@version	1.0
-*/
-_t_ma_err ma_aes_cmn_add_round_key(void);
-
-/**
 @function	ma_aes_cmn_mix_columns
 @brief		Transformation in the Cipher that takes all of the columns of the 
 			State and mixes their data (independently of one another) to 
 			produce new columns.
-@param[IN]
+@param[IN, OUT] p_state
 @return		No return
 @notes		This function is designed to be used for both direct and inverse operation
 @author		M. Abdelmawla
@@ -94,7 +80,7 @@ void ma_aes_cmn_mix_columns(_t_ma_aes_sb* p_state);
 @function	ma_aes_cmn_shift_rows
 @brief		Transformation in the Cipher that processes the State by cyclically 
 			shifting the last three rows of the State by different offsets.
-@param[IN]
+@param[IN,OUT] p_state
 @return		No return
 @notes		This function is designed to be used for both direct and inverse operation
 @author		M. Abdelmawla
@@ -105,16 +91,29 @@ void ma_aes_cmn_shift_rows(_t_ma_aes_sb* p_state);
 
 /**
 @function	ma_aes_cmn_sub_bytes
-@brief		Transformation in the Cipher that processes the State using a non�
+@brief		Transformation in the Cipher that processes the State using a none
 			linear byte substitution table (S-box) that operates on each of the 
 			State bytes independently
-@param[IN]
-@return		MA_ERR_OK in case of success and suitable error code in case of error
+@param[IN, OUT]	p_state
+@return		No return
 @notes		This function is designed to be used for both direct and inverse operation
 @author		M. Abdelmawla
-@date		22 DEC 2017
+@date		12 MAY 2019
 @version	1.0
 */
-_t_ma_err ma_aes_cmn_sub_bytes(void);
+void ma_aes_cmn_sub_bytes(_t_ma_aes_sb* p_state);
 
+/**
+@function	ma_aes_cmn_inv_sub_bytes
+@brief		Transformation in the Cipher that processes the State using a none
+			linear byte substitution table (inverse S-box) that operates on each of the
+			State bytes independently
+@param[IN, OUT]	p_state
+@return		No return
+@notes		This function is designed to be used for both direct and inverse operation
+@author		M. Abdelmawla
+@date		12 MAY 2019
+@version	1.0
+*/
+void ma_aes_cmn_inv_sub_bytes(_t_ma_aes_sb* p_state);
 #endif //_MA_AES_COMMON_H_
