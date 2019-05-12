@@ -1,6 +1,44 @@
 #include <string.h>
 #include "src/ma_aes/ma_aes_common.h"
 
+_t_ma_err tst_ma_aes_cmn_add_round_key(char *fn_name){
+	_t_ma_err ret = MA_ERR_OK;
+	int i, j;
+
+	const _t_ma_u32 w[] = {0x2b7e1516, 0x28aed2a6, 0xabf71588, 0x09cf4f3c}; // Round key;
+
+	_t_ma_aes_sb inp =
+	{
+		{0x32, 0x88, 0x31, 0xe0 },
+		{0x43, 0x5a, 0x31, 0x37 },
+		{0xf6, 0x30, 0x98, 0x07 },
+		{0xa8, 0x8d, 0xa2, 0x34 }
+	};
+
+	_t_ma_aes_sb ref =
+	{
+		{ 0x19, 0xa0, 0x9a, 0xe9 },
+		{ 0x3d, 0xf4, 0xc6, 0xf8 },
+		{ 0xe3, 0xe2, 0x8d, 0x48 },
+		{ 0xbe, 0x2b, 0x2a, 0x08 }
+	};
+
+	ma_aes_cmn_add_round_key(&inp, w);
+
+	for (i = 0; i < 4; i++)
+	{
+		for (j = 0; j < 4; j++)
+		{
+			if (inp[i][j] != ref[i][j]){
+				ret = MA_ERR_NOT_OK;
+				break;
+			}
+		}
+	}
+	strcpy(fn_name, __FUNCTION__);
+	return ret;
+}
+
 _t_ma_err tst_ma_aes_cmn_shift_rows(char* fn_name){
 	_t_ma_err ret = MA_ERR_OK;
 	int i, j;

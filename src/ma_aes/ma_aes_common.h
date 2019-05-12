@@ -27,9 +27,6 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 /** 
 Defines
 */
-#define MA_AES_CMN_NK_128	4
-#define MA_AES_CMN_NK_192	6
-#define MA_AES_CMN_NK_256	8
 #define MA_AES_CMN_GET_NR(nk)	(nk + 6)
 
 
@@ -40,8 +37,6 @@ typedef _t_ma_u8 _t_ma_aes_blk[16];		/** AES in/out block array */
 typedef _t_ma_u8 _t_ma_aes_sb[4][4];	/** State array in bytes */
 typedef _t_ma_u32 _t_ma_aes_swc[4];		/** state column word array */
 
-void ma_aes_common_cov_blk_to_swc(_t_ma_aes_swc *swc, _t_ma_aes_blk *blk);
-void ma_aes_common_cov_swc_to_blk(_t_ma_aes_blk *blk, _t_ma_aes_swc *swc);
 
 /**
 @function	ma_aes_cmn_key_expansion
@@ -61,6 +56,21 @@ void ma_aes_common_cov_swc_to_blk(_t_ma_aes_blk *blk, _t_ma_aes_swc *swc);
 @version	1.0
 */
 void ma_aes_cmn_key_expansion(_t_ma_u8 *p_key, _t_ma_u32 *p_w, _t_ma_u8 nk);
+
+/**
+@function	ma_aes_cmn_add_round_key
+@brief		Transformation in the Cipher that takes all of the columns of the
+			State and mixes their data (independently of one another) to
+			produce new columns.
+@param[IN, OUT] p_state
+@param[IN] 	w: Round keys
+@return		No return
+@notes		This function is designed to be used for both direct and inverse operation
+@author		M. Abdelmawla
+@date		12 MAY 2019
+@version	1.0
+*/
+void ma_aes_cmn_add_round_key(_t_ma_aes_sb* p_state, const _t_ma_u32 *w);
 
 /**
 @function	ma_aes_cmn_mix_columns

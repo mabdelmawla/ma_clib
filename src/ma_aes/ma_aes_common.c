@@ -149,22 +149,21 @@ void ma_aes_cmn_key_expansion(_t_ma_u8 *p_key, _t_ma_u32 *p_w, _t_ma_u8 nk){
 	}
 }
 
-void ma_aes_common_cov_blk_to_swc(_t_ma_aes_swc *swc, _t_ma_aes_blk *blk){
+void ma_aes_common_cov_swc_to_blk(_t_ma_u8 *blk, const _t_ma_u32 *swc){
 	int i, j;
 	for (j = 0; j < 4; j++){
-		swc[0][j] = 0;
 		for (i = 0; i < 4; i++){
-			swc[0][j] |= (_t_ma_s32)blk[0][i * 4 + j] << (8 * i);
+			blk[(3-i) * 4 + j] = (swc[j] >> (8 * i)) & 0xff;
 		}
 	}
 }
 
-void ma_aes_common_cov_swc_to_blk(_t_ma_aes_blk *blk, _t_ma_aes_swc *swc){
-	int i, j;
-	for (j = 0; j < 4; j++){
-		for (i = 0; i < 4; i++){
-			blk[0][i * 4 + j] = (swc[0][j] >> (8 * i)) & 0xff;
-		}
+void ma_aes_cmn_add_round_key(_t_ma_aes_sb* p_state, const _t_ma_u32 *w){
+	int i;
+	_t_ma_u8 a[16];
+	ma_aes_common_cov_swc_to_blk(a, w);
+	for(i = 0; i < 16; i++){
+		(*p_state)[i/4][i%4] ^= a[i];
 	}
 }
 

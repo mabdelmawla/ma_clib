@@ -23,6 +23,12 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 #include <ma_aes.h>
 
 void ma_aes_ecb_encrypt(_t_ma_u8 *in, _t_ma_u8 *out, _t_ma_u8 *key, _t_ma_u8 nk){
+	_t_ma_u32 w[4 * (MA_AES_CMN_NR_256 + 1)];//allocate the maximum size of key scheduler words
+	_t_ma_aes_sb *sb;
+	sb = (_t_ma_aes_sb *)in;
+
+	// generate round keys
+	ma_aes_cmn_key_expansion(key, w, nk);
 	/*
 	Reference: FIPS 197:
 	Cipher(byte in[4*Nb], byte out[4*Nb], word w[Nb*(Nr+1)])
