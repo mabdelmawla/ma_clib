@@ -33,6 +33,7 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 #define MA_CMN_GET_BIT(x, b)			(((_t_ma_u8)(b) & BIT_MSK_B((x)))>>(((_t_ma_u8)x)%8))
 #define MA_CMN_GET_BYTE(w, b_idx)		((_t_ma_u8)((w)>>((b_idx)<<3) & 0xff))
 
+
 #if (1 == MA_CMN_PLT_END)
 #define MA_CMN_ROTL8(x,shift) ((_t_ma_u8) ((x) << (shift)) | ((x) >> (8 - (shift))))
 #define MA_CMN_ROTL16(x,shift) ((_t_ma_u16) ((x) << (shift)) | ((x) >> (16 - (shift))))
@@ -48,5 +49,22 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 #define MA_CMN_ROTR16(x,shift) ((_t_ma_u16) ((x) << (shift)) | ((x) >> (16 - (shift))))
 #define MA_CMN_ROTR32(x,shift) ((_t_ma_u32) ((x) << (shift)) | ((x) >> (32 - (shift))))
 #endif
+
+/**
+@function	ma_cmn_memcpy
+@brief		Memory copy
+@param[IN]	src: Pointer to source byte array
+@param[OUT]	dst: Pointer to destination byte array
+@param[IN]	len: Length of dst/src arrays
+@return		NO Return
+@notes		No input parameters error checking is performed.
+			The caller is responsible for the validity of the passed parameters.
+			Buffers overlapping isn't supported
+@author		M. Abdelmawla
+@date		18 MAY 2019
+@version	1.0
+*/
+void ma_cmn_memcpy(_t_ma_u8* src, _t_ma_u8* dst, int len);
+
 
 #endif //_MA_COMMON_H_

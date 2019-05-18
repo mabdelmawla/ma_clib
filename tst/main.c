@@ -8,6 +8,7 @@
 
 int main(void){
 	//tst_gen_mask();
+	tst_run(MA_TST_MODULE_ID_CMN, MA_TST_SCOPE_ALL);
 	tst_run(MA_TST_MODULE_ID_AES, MA_TST_SCOPE_ALL);
 	return 0;
 }

@@ -6,6 +6,8 @@ typedef enum _TST_SCOPE_ENUM{
 } _t_ma_enum_tst_scope;
 
 typedef enum _TST_MODULE_ID_ENUM{
+	MA_TST_MODULE_ID_ALL,
+	MA_TST_MODULE_ID_CMN,
 	MA_TST_MODULE_ID_AES,
 	MA_TST_MODULE_ID_DES
 } _t_ma_enum_tst_module_id;

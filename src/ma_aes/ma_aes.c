@@ -23,29 +23,42 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 #include <ma_aes.h>
 
 void ma_aes_ecb_encrypt(_t_ma_u8 *in, _t_ma_u8 *out, _t_ma_u8 *key, _t_ma_u8 nk){
-	_t_ma_u32 w[4 * (MA_AES_CMN_NR_256 + 1)];//allocate the maximum size of key scheduler words
-	_t_ma_aes_sb *sb;
-	sb = (_t_ma_aes_sb *)in;
-
-	// generate round keys
-	ma_aes_cmn_key_expansion(key, w, nk);
 	/*
 	Reference: FIPS 197:
 	Cipher(byte in[4*Nb], byte out[4*Nb], word w[Nb*(Nr+1)])
-	begin
-		byte state[4,Nb]
-		state = in
-		AddRoundKey(state, w[0, Nb-1]) // See Sec. 5.1.4
-		for round = 1 step 1 to Nr–1
-			SubBytes(state) // See Sec. 5.1.1
-			ShiftRows(state) // See Sec. 5.1.2
-			MixColumns(state) // See Sec. 5.1.3
-			AddRoundKey(state, w[round*Nb, (round+1)*Nb-1])
-		end for
-		SubBytes(state)
-		ShiftRows(state)
-		AddRoundKey(state, w[Nr*Nb, (Nr+1)*Nb-1])
-		out = state
-	end
 	*/
+	_t_ma_u32 w[4 * (MA_AES_CMN_GET_NR(nk) + 1)];
+	_t_ma_aes_sb sb;
+	int i;
+	// generate round keys
+	ma_aes_cmn_key_expansion(key, w, nk);
+
+	//begin
+	//	byte state[4,Nb]
+	//	state = in
+	//sb = (_t_ma_aes_sb *)in;
+
+	//	AddRoundKey(state, w[0, Nb-1]) // See Sec. 5.1.4
+	ma_aes_cmn_add_round_key(&sb, &w[0]);
+	//	for round = 1 step 1 to Nr–1
+	for(i = 1; i < (MA_AES_CMN_GET_NR(nk)-1); i++) {
+	//		SubBytes(state) // See Sec. 5.1.1
+		ma_aes_cmn_sub_bytes(&sb);
+	//		ShiftRows(state) // See Sec. 5.1.2
+		ma_aes_cmn_shift_rows(&sb);
+	//		MixColumns(state) // See Sec. 5.1.3
+		ma_aes_cmn_mix_columns(&sb);
+	//		AddRoundKey(state, w[round*Nb, (round+1)*Nb-1])
+		ma_aes_cmn_add_round_key(&sb,&w[i * 4]);
+	//	end for
+	}
+	//	SubBytes(state)
+	ma_aes_cmn_sub_bytes(&sb);
+	//	ShiftRows(state)
+	ma_aes_cmn_shift_rows(&sb);
+	//	AddRoundKey(state, w[Nr*Nb, (Nr+1)*Nb-1])
+	ma_aes_cmn_add_round_key(&sb, &w[i*4]);
+	//	out = state
+
+	//end
 }
