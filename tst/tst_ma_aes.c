@@ -40,9 +40,8 @@ Cipher Key = 2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c
 	ma_aes_ecb_encrypt(inp,out,key,MA_AES_NK_128);
 
 	for(i = 0; i < 16; i++){
-		if(inp[i] != out[i]){
+		if(ref[i] != out[i]){
 			ret = MA_ERR_NOT_OK;
-			break;
 		}
 	}
 

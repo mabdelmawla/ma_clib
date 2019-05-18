@@ -149,7 +149,7 @@ void ma_aes_cmn_key_expansion(_t_ma_u8 *p_key, _t_ma_u32 *p_w, _t_ma_u8 nk){
 	}
 }
 
-void ma_aes_common_cov_swc_to_blk(_t_ma_u8 *blk, const _t_ma_u32 *swc){
+void ma_aes_cmn_cov_swc_to_blk(_t_ma_u8 *blk, const _t_ma_u32 *swc){
 	int i, j;
 	for (j = 0; j < 4; j++){
 		for (i = 0; i < 4; i++){
@@ -158,10 +158,30 @@ void ma_aes_common_cov_swc_to_blk(_t_ma_u8 *blk, const _t_ma_u32 *swc){
 	}
 }
 
+void ma_aes_cmn_cov_u8_to_sb(const _t_ma_u8 *inp, _t_ma_aes_sb *sb){
+	int i,j,n;
+	for(i = 0, n = 0; i < 4; i++){
+		for(j = 0; j < 4; j++){
+			(*sb)[j][i] = inp[n];
+			n++;
+		}
+	}
+}
+
+void ma_aes_cmn_cov_sb_to_u8(const _t_ma_aes_sb *sb, _t_ma_u8 *out){
+	int i,j,n;
+	for(i = 0, n = 0; i < 4; i++){
+		for(j = 0; j < 4; j++){
+			out[n] = (*sb)[i][j];
+			n++;
+		}
+	}
+}
+
 void ma_aes_cmn_add_round_key(_t_ma_aes_sb* p_state, const _t_ma_u32 *w){
 	int i;
 	_t_ma_u8 a[16];
-	ma_aes_common_cov_swc_to_blk(a, w);
+	ma_aes_cmn_cov_swc_to_blk(a, w);
 	for(i = 0; i < 16; i++){
 		(*p_state)[i/4][i%4] ^= a[i];
 	}

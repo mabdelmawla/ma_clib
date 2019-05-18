@@ -27,7 +27,7 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 /** 
 Defines
 */
-#define MA_AES_CMN_GET_NR(nk)	(nk + 6)
+#define MA_AES_CMN_GET_NR(nk)	((nk) + 6)
 
 
 /**
@@ -37,6 +37,8 @@ typedef _t_ma_u8 _t_ma_aes_blk[16];		/** AES in/out block array */
 typedef _t_ma_u8 _t_ma_aes_sb[4][4];	/** State array in bytes */
 typedef _t_ma_u32 _t_ma_aes_swc[4];		/** state column word array */
 
+void ma_aes_cmn_cov_u8_to_sb(const _t_ma_u8 *inp, _t_ma_aes_sb *sb);
+void ma_aes_cmn_cov_sb_to_u8(const _t_ma_aes_sb *sb, _t_ma_u8 *out);
 
 /**
 @function	ma_aes_cmn_key_expansion
