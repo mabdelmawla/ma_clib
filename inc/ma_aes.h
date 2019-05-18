@@ -25,13 +25,13 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 /**
 Defines
 */
-#define MA_AES_CMN_NK_128	4
-#define MA_AES_CMN_NK_192	6
-#define MA_AES_CMN_NK_256	8
+#define MA_AES_NK_128	4
+#define MA_AES_NK_192	6
+#define MA_AES_NK_256	8
 
-#define MA_AES_CMN_NR_128	10
-#define MA_AES_CMN_NR_192	12
-#define MA_AES_CMN_NR_256	14
+#define MA_AES_NR_128	10
+#define MA_AES_NR_192	12
+#define MA_AES_NR_256	14
 
 /**
 @function	ma_aes_ecb_encrypt

@@ -36,8 +36,7 @@ void ma_aes_ecb_encrypt(_t_ma_u8 *in, _t_ma_u8 *out, _t_ma_u8 *key, _t_ma_u8 nk)
 	//begin
 	//	byte state[4,Nb]
 	//	state = in
-	//sb = (_t_ma_aes_sb *)in;
-
+	ma_cmn_memcpy(in, (_t_ma_u8*)&sb, 16);
 	//	AddRoundKey(state, w[0, Nb-1]) // See Sec. 5.1.4
 	ma_aes_cmn_add_round_key(&sb, &w[0]);
 	//	for round = 1 step 1 to Nr–1
@@ -59,6 +58,6 @@ void ma_aes_ecb_encrypt(_t_ma_u8 *in, _t_ma_u8 *out, _t_ma_u8 *key, _t_ma_u8 nk)
 	//	AddRoundKey(state, w[Nr*Nb, (Nr+1)*Nb-1])
 	ma_aes_cmn_add_round_key(&sb, &w[i*4]);
 	//	out = state
-
+	ma_cmn_memcpy((_t_ma_u8*)&sb,out,16);
 	//end
 }

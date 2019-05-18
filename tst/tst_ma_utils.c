@@ -1,14 +1,16 @@
 #include "tst_ma_utils.h"
 #include "tst_ma_cmn.h"
 #include "tst_ma_aes_common.h"
+#include "tst_ma_aes.h"
 #include <stdio.h>
 
 const _t_tst_ma_fptr ga_tst_cmn[] = { tst_ma_cmn_memcpy };
 
-const _t_tst_ma_fptr ga_tst_aes[] = { tst_ma_aes_cmn_add_round_key,
+const _t_tst_ma_fptr ga_tst_aes_cmn[] = { tst_ma_aes_cmn_add_round_key,
 		tst_ma_aes_cmn_shift_rows, tst_ma_aes_cmn_mix_columns,
 		tst_ma_aes_cmn_key_expansion_128, tst_ma_aes_cmn_key_expansion_192,
 		tst_ma_aes_cmn_key_expansion_256 };
+const _t_tst_ma_fptr ga_tst_aes[] = { tst_ma_aes_ecb_encrypt};
 
 _t_ma_err tst_run(_t_ma_enum_tst_module_id enum_tst_module_id,
 		_t_ma_enum_tst_scope enum_tst_scope) {
@@ -21,6 +23,10 @@ _t_ma_err tst_run(_t_ma_enum_tst_module_id enum_tst_module_id,
 	case MA_TST_MODULE_ID_CMN:
 		fp = (_t_tst_ma_fptr*) ga_tst_cmn;
 		N = sizeof(ga_tst_cmn) / sizeof(_t_tst_ma_fptr);
+		break;
+	case MA_TST_MODULE_ID_AES_CMN:
+		fp = (_t_tst_ma_fptr*) ga_tst_aes_cmn;
+		N = sizeof(ga_tst_aes_cmn) / sizeof(_t_tst_ma_fptr);
 		break;
 	case MA_TST_MODULE_ID_AES:
 		fp = (_t_tst_ma_fptr*) ga_tst_aes;
