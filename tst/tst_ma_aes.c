@@ -6,13 +6,15 @@
  */
 
 #include <string.h>
+#include <stdio.h>
 #include "tst_ma_aes.h"
 #include <ma_aes.h>
 
-typedef struct _t_str_aes_input_ {
+typedef __attribute__((aligned(4))) struct _t_str_aes_input_ {
 	_t_ma_u8 plain_txt[16];
 	_t_ma_u8 key[16];
 	_t_ma_u8 cipher_txt[16];
+	_t_ma_u8 nk;
 } _t_str_aes_input;
 
 static _t_str_aes_input gstr_aes_input[] = {
@@ -35,18 +37,15 @@ static _t_str_aes_input gstr_aes_input[] = {
 				0x25, 0xdc, 0x11, 0x6a,
 				0x84, 0x09, 0x85, 0x0b,
 				0x1d, 0xfb, 0x97, 0x32
-			}
+			},
+			MA_AES_NK_128
 		},
 };
 
 _t_ma_err tst_ma_aes_ecb_encrypt(char *fn_name){
+	int i, j;
 	_t_ma_err ret = MA_ERR_OK;
-	int i;
 
-	/*
-	 * Input = 32 43 f6 a8 88 5a 30 8d 31 31 98 a2 e0 37 07 34
-Cipher Key = 2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c
-	 */
 	_t_ma_u8 key[16] = {
 			0x2b, 0x7e ,0x15 ,0x16,
 			0x28 ,0xae ,0xd2 ,0xa6,
@@ -67,17 +66,26 @@ Cipher Key = 2b 7e 15 16 28 ae d2 a6 ab f7 15 88 09 cf 4f 3c
 	};
 	_t_ma_u8 out[16];
 
-	//ma_aes_ecb_encrypt(inp,out,key,MA_AES_NK_128);
-	ma_aes_ecb_encrypt(
-			gstr_aes_input[0].plain_txt,
-			out,
-			gstr_aes_input[0].key,
-			MA_AES_NK_128
-			);
-
-	for(i = 0; i < 16; i++){
-		if(gstr_aes_input[0].cipher_txt[i] != out[i]){
-			ret = MA_ERR_NOT_OK;
+	for (j = 0; j < (sizeof(gstr_aes_input) / sizeof(_t_str_aes_input)); j++) {
+		_t_ma_err local_ret = MA_ERR_OK;
+		ma_aes_ecb_encrypt(
+				gstr_aes_input[j].plain_txt,
+				out,
+				gstr_aes_input[j].key,
+				gstr_aes_input[j].nk
+				);
+		for (i = 0; i < 16; i++) {
+			if (gstr_aes_input[0].cipher_txt[i] != out[i]) {
+				ret = MA_ERR_NOT_OK;
+				local_ret = MA_ERR_NOT_OK;
+				break;
+			}
+		}
+		printf("\t\t[TV%02d] %s ==> ", j, __FUNCTION__);
+		if(MA_ERR_OK == local_ret){
+			printf("OK\n");
+		} else {
+			printf("ERR%ld\n", local_ret);
 		}
 	}
 

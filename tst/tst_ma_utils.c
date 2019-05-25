@@ -39,16 +39,18 @@ _t_ma_err tst_run(_t_ma_enum_tst_module_id enum_tst_module_id,
 	if (MA_ERR_OK == ret) {
 		int i;
 		_t_ma_err res;
+		printf("[%03d] Module Test Start:\n", enum_tst_module_id);
 		for (i = 0; i < N; i++) {
 			char fn_name[128] = { 0 };
 			res = fp[i](fn_name);
-			printf("[%04d] %s\t\t==> ", i, fn_name);
+			printf("\t[%02d] %s ==> ", i, fn_name);
 			if (MA_ERR_OK == res) {
 				printf("OK\n");
 			} else {
 				printf("ERR%ld\n", res);
 			}
 		}
+		printf("[%03d] Module Test End\n",enum_tst_module_id);
 	}
 	return ret;
 }
