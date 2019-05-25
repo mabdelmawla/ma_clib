@@ -47,7 +47,9 @@ _t_ma_err tst_run(_t_ma_enum_tst_module_id enum_tst_module_id,
 			if (MA_ERR_OK == res) {
 				printf("OK\n");
 			} else {
+				printf("\033[1;31m"); // change console color to red
 				printf("ERR%ld\n", res);
+				printf("\033[0;0m"); // reset color change
 			}
 		}
 		printf("[%03d] Module Test End\n",enum_tst_module_id);
