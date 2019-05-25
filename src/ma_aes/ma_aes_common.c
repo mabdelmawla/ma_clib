@@ -172,7 +172,7 @@ void ma_aes_cmn_cov_sb_to_u8(const _t_ma_aes_sb *sb, _t_ma_u8 *out){
 	int i,j,n;
 	for(i = 0, n = 0; i < 4; i++){
 		for(j = 0; j < 4; j++){
-			out[n] = (*sb)[i][j];
+			out[n] = (*sb)[j][i];
 			n++;
 		}
 	}
