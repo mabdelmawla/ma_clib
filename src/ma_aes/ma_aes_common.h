@@ -81,7 +81,7 @@ void ma_aes_cmn_add_round_key(_t_ma_aes_sb* p_state, const _t_ma_u32 *w);
 			produce new columns.
 @param[IN, OUT] p_state
 @return		No return
-@notes		This function is designed to be used for both direct and inverse operation
+@notes
 @author		M. Abdelmawla
 @date		22 DEC 2017
 @version	1.0
@@ -89,17 +89,46 @@ void ma_aes_cmn_add_round_key(_t_ma_aes_sb* p_state, const _t_ma_u32 *w);
 void ma_aes_cmn_mix_columns(_t_ma_aes_sb* p_state);
 
 /**
+@function	ma_aes_cmn_inv_mix_columns
+@brief		Transformation in the Cipher that takes all of the columns of the
+			State and mixes their data (independently of one another) to
+			produce new columns.
+@param[IN, OUT] p_state
+@return		No return
+@notes
+@author		M. Abdelmawla
+@date		26 MAY 2019
+@version	1.0
+*/
+void ma_aes_cmn_inv_mix_columns(_t_ma_aes_sb* p_state);
+
+
+/**
 @function	ma_aes_cmn_shift_rows
 @brief		Transformation in the Cipher that processes the State by cyclically 
 			shifting the last three rows of the State by different offsets.
 @param[IN,OUT] p_state
 @return		No return
-@notes		This function is designed to be used for both direct and inverse operation
+@notes
 @author		M. Abdelmawla
 @date		22 DEC 2017
 @version	1.0
 */
 void ma_aes_cmn_shift_rows(_t_ma_aes_sb* p_state);
+
+/**
+@function	ma_aes_cmn_inv_shift_rows
+@brief		Transformation in the Cipher that processes the State by cyclically
+			shifting the last three rows of the State by different offsets.
+@param[IN,OUT] p_state
+@return		No return
+@notes
+@author		M. Abdelmawla
+@date		26 MAY 2019
+@version	1.0
+*/
+void ma_aes_cmn_inv_shift_rows(_t_ma_aes_sb* p_state);
+
 
 /**
 @function	ma_aes_cmn_sub_bytes
@@ -108,7 +137,7 @@ void ma_aes_cmn_shift_rows(_t_ma_aes_sb* p_state);
 			State bytes independently
 @param[IN, OUT]	p_state
 @return		No return
-@notes		This function is designed to be used for both direct and inverse operation
+@notes
 @author		M. Abdelmawla
 @date		12 MAY 2019
 @version	1.0
@@ -122,7 +151,7 @@ void ma_aes_cmn_sub_bytes(_t_ma_aes_sb* p_state);
 			State bytes independently
 @param[IN, OUT]	p_state
 @return		No return
-@notes		This function is designed to be used for both direct and inverse operation
+@notes
 @author		M. Abdelmawla
 @date		12 MAY 2019
 @version	1.0

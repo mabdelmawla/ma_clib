@@ -4,7 +4,9 @@
 
 _t_ma_err tst_ma_aes_cmn_add_round_key(char*);
 _t_ma_err tst_ma_aes_cmn_shift_rows(char*);
+_t_ma_err tst_ma_aes_cmn_inv_shift_rows(char*);
 _t_ma_err tst_ma_aes_cmn_mix_columns(char*);
+_t_ma_err tst_ma_aes_cmn_inv_mix_columns(char*);
 _t_ma_err tst_ma_aes_cmn_key_expansion_128(char*);
 _t_ma_err tst_ma_aes_cmn_key_expansion_192(char*);
 _t_ma_err tst_ma_aes_cmn_key_expansion_256(char*);

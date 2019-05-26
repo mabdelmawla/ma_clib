@@ -75,6 +75,42 @@ _t_ma_err tst_ma_aes_cmn_shift_rows(char* fn_name){
  	return ret;
 }
 
+_t_ma_err tst_ma_aes_cmn_inv_shift_rows(char* fn_name){
+	_t_ma_err ret = MA_ERR_OK;
+	int i, j;
+	_t_ma_aes_sb inp =
+	{
+		{0x00, 0x01, 0x02, 0x03 },
+		{0x10, 0x11, 0x12, 0x13 },
+		{0x20, 0x21, 0x22, 0x23 },
+		{0x30, 0x31, 0x32, 0x33 }
+	};
+	_t_ma_aes_sb ref =
+	{
+		{0x00, 0x01, 0x02, 0x03 },
+		{0x13, 0x10, 0x11, 0x12 },
+		{0x22, 0x23, 0x20, 0x21 },
+		{0x31, 0x32, 0x33, 0x30 }
+	};
+
+	ma_aes_cmn_inv_shift_rows(&inp);
+
+	for (i = 0; i < 4; i++)
+	{
+		for (j = 0; j < 4; j++)
+		{
+			if (inp[i][j] != ref[i][j]){
+				ret = MA_ERR_NOT_OK;
+				break;
+			}
+		}
+	}
+
+	strcpy(fn_name,__FUNCTION__);
+
+ 	return ret;
+}
+
 _t_ma_err tst_ma_aes_cmn_mix_columns(char* fn_name){
 	_t_ma_err ret = MA_ERR_OK;
 	int i, j;
@@ -94,6 +130,43 @@ _t_ma_err tst_ma_aes_cmn_mix_columns(char* fn_name){
 	};
 
 	ma_aes_cmn_mix_columns(&inp);
+
+	for (i = 0; i < 4; i++)
+	{
+		for (j = 0; j < 4; j++)
+		{
+			if (inp[i][j] != ref[i][j]){
+				ret = MA_ERR_NOT_OK;
+				break;
+			}
+		}
+	}
+
+	strcpy(fn_name, __FUNCTION__);
+	return ret;
+}
+
+_t_ma_err tst_ma_aes_cmn_inv_mix_columns(char* fn_name){
+	_t_ma_err ret = MA_ERR_OK;
+	int i, j;
+	_t_ma_aes_sb inp =
+	{
+		//bd6e7c3df2b5779e0b61216e8b10b689
+		{0xbd, 0xf2, 0x0b, 0x8b},
+		{0x6e, 0xb5, 0x61, 0x10},
+		{0x7c, 0x77, 0x21, 0xb6},
+		{0x3d, 0x9e, 0x6e, 0x89}
+	};
+	_t_ma_aes_sb ref =
+	{
+		//4773b91ff72f354361cb018ea1e6cf2c
+		{0x47, 0xf7, 0x61, 0xa1},
+		{0x73, 0x2f, 0xcb, 0xe6},
+		{0xb9, 0x35, 0x01, 0xcf},
+		{0x1f, 0x43, 0x8e, 0x2c},
+	};
+
+	ma_aes_cmn_inv_mix_columns(&inp);
 
 	for (i = 0; i < 4; i++)
 	{

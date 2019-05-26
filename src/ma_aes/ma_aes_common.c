@@ -197,8 +197,24 @@ void ma_aes_cmn_shift_rows(_t_ma_aes_sb* p_state){
 	*a = MA_CMN_ROTL32(*a, 24);
 }
 
+void ma_aes_cmn_inv_shift_rows(_t_ma_aes_sb* p_state){
+	_t_ma_u32 *a = (_t_ma_u32 *)p_state;
+	a++;
+	*a = MA_CMN_ROTR32(*a, 8);
+	a++;
+	*a = MA_CMN_ROTR32(*a, 16);
+	a++;
+	*a = MA_CMN_ROTR32(*a, 24);
+}
+
 void ma_aes_cmn_mix_columns(_t_ma_aes_sb* p_state){
 	int i;
+	/*
+	s0,c = ({02} • s0,c ) ¯ ({03} • s1,c ) ¯ s2,c ¯ s3,c
+	s1,c = s0,c ¯ ({02} • s1,c ) ¯ ({03} • s2,c ) ¯ s3,c
+	s2,c = s0,c ¯ s1,c ¯ ({02} • s2,c ) ¯ ({03} • s3,c )
+	s3,c = ({03} • s0,c ) ¯ s1,c ¯ s2,c ¯ ({02} • s3,c ).
+	 */
 	for (i = 0; i < 4; i++){
 		_t_ma_u8 s[4] =
 		{
@@ -227,6 +243,45 @@ void ma_aes_cmn_mix_columns(_t_ma_aes_sb* p_state){
 			s[1] ^
 			s[2] ^
 			_internal_aes_mod_mult(0x02, s[3]);
+	}
+}
+
+void ma_aes_cmn_inv_mix_columns(_t_ma_aes_sb* p_state){
+	int i;
+	/*
+	s0,c = ({0e} • s0,c ) ¯ ({0b} • s1,c ) ¯ ({0d} • s2,c ) ¯ ({09} • s3,c )
+	s1,c = ({09} • s0,c ) ¯ ({0e} • s1,c ) ¯ ({0b} • s2,c ) ¯ ({0d} • s3,c )
+	s2,c = ({0d} • s0,c ) ¯ ({09} • s1,c ) ¯ ({0e} • s2,c ) ¯ ({0b} • s3,c )
+	s3,c = ({0b} • s0,c ) ¯ ({0d} • s1,c ) ¯ ({09} • s2,c ) ¯ ({0e} • s3,c )
+	 */
+	for (i = 0; i < 4; i++){
+		_t_ma_u8 s[4] =
+		{
+			(*p_state)[0][i],
+			(*p_state)[1][i],
+			(*p_state)[2][i],
+			(*p_state)[3][i]
+		};
+		(*p_state)[0][i] =
+			_internal_aes_mod_mult(0x0e, s[0]) ^
+			_internal_aes_mod_mult(0x0b, s[1]) ^
+			_internal_aes_mod_mult(0x0d, s[2]) ^
+			_internal_aes_mod_mult(0x09, s[3]);
+		(*p_state)[1][i] =
+			_internal_aes_mod_mult(0x09, s[0]) ^
+			_internal_aes_mod_mult(0x0e, s[1]) ^
+			_internal_aes_mod_mult(0x0b, s[2]) ^
+			_internal_aes_mod_mult(0x0d, s[3]);
+		(*p_state)[2][i] =
+			_internal_aes_mod_mult(0x0d, s[0]) ^
+			_internal_aes_mod_mult(0x09, s[1]) ^
+			_internal_aes_mod_mult(0x0e, s[2]) ^
+			_internal_aes_mod_mult(0x0b, s[3]);
+		(*p_state)[3][i] =
+			_internal_aes_mod_mult(0x0b, s[0]) ^
+			_internal_aes_mod_mult(0x0d, s[1]) ^
+			_internal_aes_mod_mult(0x09, s[2]) ^
+			_internal_aes_mod_mult(0x0e, s[3]);
 	}
 }
 

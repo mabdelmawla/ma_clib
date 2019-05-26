@@ -1,14 +1,19 @@
+#include <stdio.h>
 #include "tst_ma_utils.h"
 #include "tst_ma_cmn.h"
 #include "tst_ma_aes_common.h"
 #include "tst_ma_aes.h"
-#include <stdio.h>
 
 const _t_tst_ma_fptr ga_tst_cmn[] = { tst_ma_cmn_memcpy };
 
-const _t_tst_ma_fptr ga_tst_aes_cmn[] = { tst_ma_aes_cmn_add_round_key,
-		tst_ma_aes_cmn_shift_rows, tst_ma_aes_cmn_mix_columns,
-		tst_ma_aes_cmn_key_expansion_128, tst_ma_aes_cmn_key_expansion_192,
+const _t_tst_ma_fptr ga_tst_aes_cmn[] = {
+		tst_ma_aes_cmn_add_round_key,
+		tst_ma_aes_cmn_shift_rows,
+		tst_ma_aes_cmn_inv_shift_rows,
+		tst_ma_aes_cmn_mix_columns,
+		tst_ma_aes_cmn_inv_mix_columns,
+		tst_ma_aes_cmn_key_expansion_128,
+		tst_ma_aes_cmn_key_expansion_192,
 		tst_ma_aes_cmn_key_expansion_256 };
 const _t_tst_ma_fptr ga_tst_aes[] = { tst_ma_aes_ecb_encrypt};
 
