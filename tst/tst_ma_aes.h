@@ -11,5 +11,6 @@
 #include <ma_error.h>
 
 _t_ma_err tst_ma_aes_ecb_encrypt(char *fn_name);
+_t_ma_err tst_ma_aes_ecb_decrypt(char *fn_name);
 
 #endif /* TST_TST_MA_AES_H_ */

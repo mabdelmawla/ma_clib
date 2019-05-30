@@ -15,7 +15,9 @@ const _t_tst_ma_fptr ga_tst_aes_cmn[] = {
 		tst_ma_aes_cmn_key_expansion_128,
 		tst_ma_aes_cmn_key_expansion_192,
 		tst_ma_aes_cmn_key_expansion_256 };
-const _t_tst_ma_fptr ga_tst_aes[] = { tst_ma_aes_ecb_encrypt};
+const _t_tst_ma_fptr ga_tst_aes[] = {
+		tst_ma_aes_ecb_encrypt,
+		tst_ma_aes_ecb_decrypt};
 
 _t_ma_err tst_run(_t_ma_enum_tst_module_id enum_tst_module_id,
 		_t_ma_enum_tst_scope enum_tst_scope) {

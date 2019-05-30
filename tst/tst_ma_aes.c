@@ -148,3 +148,37 @@ _t_ma_err tst_ma_aes_ecb_encrypt(char *fn_name){
 	strcpy(fn_name, __FUNCTION__);
 	return ret;
 }
+
+_t_ma_err tst_ma_aes_ecb_decrypt(char *fn_name){
+	int i, j;
+	_t_ma_err ret = MA_ERR_OK;
+	_t_ma_u8 out[16];
+
+	for (j = 0; j < (sizeof(gstr_aes_input) / sizeof(_t_str_aes_input)); j++) {
+		_t_ma_err local_ret = MA_ERR_OK;
+		ma_aes_ecb_decrypt(
+				gstr_aes_input[j].cipher_txt,
+				out,
+				gstr_aes_input[j].key,
+				gstr_aes_input[j].nk
+				);
+		for (i = 0; i < 16; i++) {
+			if (gstr_aes_input[j].plain_txt[i] != out[i]) {
+				ret = MA_ERR_NOT_OK;
+				local_ret = MA_ERR_NOT_OK;
+				break;
+			}
+		}
+		printf("\t\t[TV%02d] %s ==> ", j, __FUNCTION__);
+		if(MA_ERR_OK == local_ret){
+			printf("OK\n");
+		} else {
+			printf("\033[1;31m"); // change console color to red
+			printf("ERR%ld\n", local_ret);
+			printf("\033[0;0m"); // reset color change
+		}
+	}
+
+	strcpy(fn_name, __FUNCTION__);
+	return ret;
+}

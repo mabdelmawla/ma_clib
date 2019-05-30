@@ -36,8 +36,8 @@ Defines
 /**
 @function	ma_aes_ecb_encrypt
 @brief		Perform AEC ECB encryption
-@param[IN]	in: Input block array in bytes. Must be word aligned
-@param[OUT]	out: Output block array in bytes. Must be word aligned
+@param[IN]	in: Input plain text block array in bytes. Must be word aligned
+@param[OUT]	out: Output cipher text block array in bytes. Must be word aligned
 @param[IN]	key: Key array in bytes with size defined by NK. Must be word aligned
 @param[IN]	NK: Can be (ONLY) one of the following MACRO values depending on the desired key size
 					MA_AES_CMN_NK_128
@@ -46,10 +46,31 @@ Defines
 @return		NO Return
 @notes		No input parameters error checking is performed.
 			The caller is responsible for the validity of the passed parameters.
-			A buffer of size MA_AES_CMN_NR_256 words is always allocated on stack
+			A buffer of size up nk words is always allocated on stack
 @author		M. Abdelmawla
 @date		12 MAY 2019
 @version	1.0
 */
 void ma_aes_ecb_encrypt(_t_ma_u8 *in, _t_ma_u8 *out, _t_ma_u8 *key, _t_ma_u8 nk);
+
+/**
+@function	ma_aes_ecb_decrypt
+@brief		Perform AEC ECB decryption
+@param[IN]	in: Input cipher text block array in bytes. Must be word aligned
+@param[OUT]	out: Output plain text block array in bytes. Must be word aligned
+@param[IN]	key: Key array in bytes with size defined by NK. Must be word aligned
+@param[IN]	NK: Can be (ONLY) one of the following MACRO values depending on the desired key size
+					MA_AES_CMN_NK_128
+					MA_AES_CMN_NK_192
+					MA_AES_CMN_NK_256
+@return		NO Return
+@notes		No input parameters error checking is performed.
+			The caller is responsible for the validity of the passed parameters.
+			A buffer of size up nk words is always allocated on stack
+@author		M. Abdelmawla
+@date		30 MAY 2019
+@version	1.0
+*/
+void ma_aes_ecb_decrypt(_t_ma_u8 *in, _t_ma_u8 *out, _t_ma_u8 *key, _t_ma_u8 nk);
+
 #endif //_MA_AES_H_
