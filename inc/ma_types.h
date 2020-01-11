@@ -26,8 +26,10 @@ typedef unsigned char		_t_ma_u8;
 typedef unsigned short		_t_ma_u16;
 #ifndef __linux__
 	typedef unsigned long		_t_ma_u32;
+	typedef unsigned long long	_t_ma_u64;
 #else
 	typedef unsigned int		_t_ma_u32;
+	typedef unsigned long int	_t_ma_u64;
 #endif
 
 typedef void				_t_ma_void;
