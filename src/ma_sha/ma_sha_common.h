@@ -27,6 +27,10 @@ along with ma_clib.  If not, see <https://www.gnu.org/licenses/>.
 /**
 Defines
 */
+// SHA Constants (Reference: FIPS PUB 180-3) section 4.2
+const _t_ma_u32 ga_ma_sha_cmn_sha1_k[];
+const _t_ma_u32 ga_ma_sha_cmn_sha224_256_k[];
+const _t_ma_u64 ga_ma_sha_cmn_sha384_512_k[];
 /**
 Typedefs
 */
